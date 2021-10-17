@@ -29,6 +29,14 @@ export class UserService {
     );
   }
 
+  deleteUser(id: number): Observable<User> {
+    const url = `${usersUrl}/${id}`;
+
+    return this.http.delete<User>(url, httpOptions).pipe(
+      catchError(this.handleError<User>('deleteUser'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

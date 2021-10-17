@@ -9,7 +9,7 @@
     </mat-toolbar>    
     <div class="container" fxLayout="column">
         <div class="add-button-container">
-            <button mat-mini-fab color="primary" class="add-button">
+            <button mat-mini-fab color="primary" class="add-button" (click)="onAddUser()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -50,10 +50,10 @@
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTIONS </th>
                   <td mat-cell *matCellDef="let row">
                     <div fxLayout="row" fxLayoutAlign="start center">
-                        <button mat-icon-button (click)="editUser(row)" title="Edit User" [disabled]="!row.isActive">
+                        <button mat-icon-button (click)="onEditUser(row)" title="Edit User" [disabled]="!row.isActive">
                             <mat-icon class="user-action">settings</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn" (click)="deleteUser(row)" title="Delete User">
+                        <button mat-icon-button color="warn" (click)="onDeleteUser(row)" title="Delete User">
                             <mat-icon  class="user-action">delete</mat-icon>
                         </button>
                     </div>

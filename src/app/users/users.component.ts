@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +9,8 @@ import { UserService } from '../core/services/user.service';
 import { Role } from '../shared/models/role.model';
 import { Status } from '../shared/models/status.model';
 import { User } from '../shared/models/user.model';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { UserInviteComponent } from './user-invite/user-invite.component';
 
 export interface UserData {
   id: number;
@@ -29,17 +32,21 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
-     //this.service.addUser( new User('test f', 'test l', 'test@test.tu', Role.User, Status.Active)).subscribe(x=>console.log(x));
-     this.service.getUsers().
-     subscribe(data  => {
-       this.dataSource.data = data.map((x) => {
-         let user: UserData = {id: x.id, userName: `${x.firstName} ${x.lastName}`, email: x.email, isActive: x.status == Status.Active, role: Role[x.role]} as UserData;
-        return user;
-      });
+     this.getUsers();
+  }
+
+  getUsers() {
+    this.service.getUsers().
+    subscribe(data  => {
+      this.dataSource.data = data.map((x) => {
+        let user: UserData = {id: x.id, userName: `${x.firstName} ${x.lastName}`, email: x.email, isActive: x.status == Status.Active, role: Role[x.role]} as UserData;
+       return user;
      });
+    });
   }
 
   ngAfterViewInit() {
@@ -56,11 +63,21 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editUser(event: any) {
+  onAddUser() {
+    const deleteUserDialog = this.dialog.open(UserInviteComponent, { maxWidth: '50%', width: '500px' });
+    deleteUserDialog.afterClosed().subscribe((res) => {
+        if (res) this.getUsers();
+    });
+  }
+
+  onEditUser(event: any) {
 
   }
 
-  deleteUser(event: any) {
-
+  onDeleteUser(event: any) {
+    const deleteUserDialog = this.dialog.open(UserDeleteComponent, { data: event,  maxWidth: '50%', width: '500px' });
+    deleteUserDialog.afterClosed().subscribe((res) => {
+        if (res) this.getUsers();
+    });
   }
 }

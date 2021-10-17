@@ -1,0 +1,16 @@
+<div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="15px">
+    <div class="mat-h1">Delete User</div>
+
+    <mat-card fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <mat-icon>face</mat-icon>
+            <span>{{data.userName}}</span>
+        </div>
+        <div [style.color]="data.isActive ? '#673ab7': 'grey'">{{data.isActive ? 'Active User' : 'Inactive User'}}</div>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <button mat-raised-button color="warn" (click)="onDeleteUser()">Delete User</button>
+        <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div fxLayout="column" fxLayoutAlign="space-around start" fxLayoutGap="15px">
+    <div class="mat-h1">Invite New User</div>
+    <form [formGroup]="userForm"  fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" fxFill>
+            <mat-form-field class="form-field">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="form-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select  placeholder="Role" formControlName="role" required>
+                <mat-option [value]="item" *ngFor="let item of roleSelectList">{{roles[item]}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <div fxLayout="row" fxLayoutAlign="space-between end" fxFill>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <button mat-raised-button color="primary" (click)="onSendInvitation()" [disabled]="!userForm.valid">Send Invitation</button>
+            <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
+        </div>
+
+        <div>
+            <mat-error *ngIf="!userForm.valid">
+                <span>Fill in all the fields</span>
+            </mat-error>
+            <mat-hint *ngIf="userForm.valid">
+                <span>Good to go</span>
+            </mat-hint>
+        </div>
+    </div>
+</div>
