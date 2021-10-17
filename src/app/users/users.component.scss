@@ -1,0 +1,61 @@
+.mat-form-field {
+  font-size: 14px;
+  width: calc(100% - 200px);
+  max-width: 400px;
+  color: #a5a5a5;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: -1em;
+}
+
+.add-button-container,
+.add-button {
+  z-index: 3;
+  margin-top: -12px;
+}
+
+.add-button-container {
+  padding-left: 50px;
+}
+
+table,
+mat-paginator {
+  width: 100%;
+  background: none;
+}
+
+.mat-cell {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.user-cell::before {
+  font-family: 'Material Icons Outlined';
+  content: "account_circle";
+  font-size: 30px;
+  color: grey;
+  font-weight: 100;
+  position: absolute;
+  margin-left: -70px;
+  margin-top: 7px;
+}
+
+.user-action {
+  font-size: 18px !important;
+}
+
+tr.mat-row-disabled {
+  .mat-cell:not(.mat-column-actions) {
+    opacity: 0.5;
+  }
+}
+
+.mat-column-actions {
+  width: 30px;
+}
+
+.mat-column-role,
+.mat-column-status {
+  width: 20%;
+}

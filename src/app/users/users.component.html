@@ -1,0 +1,77 @@
+<div fxLayout="column">
+    <mat-toolbar fxLayoutAlign="space-between end" class="mat-elevation-z3">
+        <span>Project Access</span>
+        <mat-form-field floatLabel='never'>
+            <mat-label><i>Type to filter the table</i></mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </mat-toolbar>    
+    <div class="container" fxLayout="column">
+        <div class="add-button-container">
+            <button mat-mini-fab color="primary" class="add-button">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div class="content">
+            <table mat-table [dataSource]="dataSource" matSort color="warn">
+
+                <!-- USER Column -->
+                <ng-container matColumnDef="userName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> USER </th>
+                  <td mat-cell *matCellDef="let row" class="user-cell">                      
+                      <strong>{{row.userName}}</strong>
+                      <div>{{row.email}}</div>
+                  </td>
+                </ng-container>
+            
+                <!-- ROLE Column -->
+                <ng-container matColumnDef="role">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> ROLE </th>
+                  <td mat-cell *matCellDef="let row">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon *ngIf="row.role=='Admin'" color="primary" style="margin-left: -35px; margin-right: 10px;">vpn_key</mat-icon>
+                        <span>{{row.role}}</span>
+                    </div>
+                </td>
+                </ng-container>
+            
+                <!-- STATUS Column -->
+                <ng-container matColumnDef="isActive">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> STATUS </th>
+                  <td mat-cell *matCellDef="let row"> 
+                      <!-- {{row.isActive}} -->
+                      <mat-slide-toggle [checked]="row.isActive" (change)="row.isActive = !row.isActive"></mat-slide-toggle>
+                  </td>
+                </ng-container>
+            
+                <!-- ACTIONS Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTIONS </th>
+                  <td mat-cell *matCellDef="let row">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <button mat-icon-button (click)="editUser(row)" title="Edit User" [disabled]="!row.isActive">
+                            <mat-icon class="user-action">settings</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteUser(row)" title="Delete User">
+                            <mat-icon  class="user-action">delete</mat-icon>
+                        </button>
+                    </div>
+                  </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'mat-row-disabled' : !row['isActive']}"></tr>
+            
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+</div>
+    
+
+
