@@ -36,6 +36,12 @@ export class UserService {
     );
   }
 
+  updateUser(user: User): Observable<any> {
+    return this.http.put(usersUrl, user, httpOptions).pipe(
+      catchError(this.handleError<any>('updateUser'))
+    );
+  }
+
   deleteUser(id: number): Observable<User> {
     const url = `${usersUrl}/${id}`;
 

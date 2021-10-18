@@ -51,7 +51,7 @@
                     <div class="mat-headline">Permissions</div>
                     <div fxLayout="row" fxLayoutAlign="space-between start">
                         <span>Super Admin</span>
-                        <mat-slide-toggle [disabled]="!isActive"></mat-slide-toggle>
+                        <mat-slide-toggle formControlName="superAdmin" [disabled]="!isActive"></mat-slide-toggle>
                     </div>                   
 
                     <mat-accordion [togglePosition]="'before'" formArrayName="permissions" multi>

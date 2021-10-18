@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { UserService } from '../../core/services/user.service';
 import { Role } from '../../shared/models/role.model';
@@ -20,6 +20,7 @@ export class UserSettingsComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     role: ['', Validators.required],
+    superAdmin: ['', Validators.required],
     permissions: this.fb.array([])
   });
 
@@ -32,7 +33,8 @@ export class UserSettingsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private service: UserService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -50,7 +52,8 @@ export class UserSettingsComponent implements OnInit {
     this.settingsForm.patchValue({
       firstName: this.user.firstName,
       lastName: this.user.lastName,
-      role: this.user.role
+      role: this.user.role,
+      superAdmin: this.user.superAdmin
     });
 
     this.user.permissions.forEach(group => {
@@ -95,6 +98,15 @@ export class UserSettingsComponent implements OnInit {
   }
 
   onSaveChanges() {
-    // TODO
+    if (!this.settingsForm.valid) return;
+    const updateUser: User = { ...this.settingsForm.value,
+       status: this.isActive ? Status.Active : Status.Inactive,
+       email: this.user.email,
+       id: this.user.id
+    };
+    this.service.updateUser(updateUser)
+    .subscribe((res) => this.router.navigate(['users']),
+      (error) => console.log(error)
+    );
   }
 }
