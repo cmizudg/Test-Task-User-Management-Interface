@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Status } from 'src/app/shared/models/status.model';
+import { Status } from '../../shared/models/status.model';
 import { UserService } from '../../core/services/user.service';
 import { Role } from '../../shared/models/role.model';
 

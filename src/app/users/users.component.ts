@@ -1,14 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UserService } from '../core/services/user.service';
 import { Role } from '../shared/models/role.model';
 import { Status } from '../shared/models/status.model';
-import { User } from '../shared/models/user.model';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
 import { UserInviteComponent } from './user-invite/user-invite.component';
 
@@ -33,7 +31,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private service: UserService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit(): void {
      this.getUsers();
@@ -71,7 +70,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   onEditUser(event: any) {
-
+    if (!event.id) return;
+    this.router.navigate(['users',event.id]);
   }
 
   onDeleteUser(event: any) {

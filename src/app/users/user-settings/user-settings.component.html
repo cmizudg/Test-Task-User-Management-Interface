@@ -1,1 +1,80 @@
-<p>user-settings works!</p>
+<div fxLayout="column">
+    <mat-toolbar fxLayoutAlign="space-between end" class="mat-elevation-z3">
+        <span>User Setup</span>
+    </mat-toolbar>    
+    <div class="container" fxLayout="column">
+        <div class="settings-button-container">
+            <button mat-mini-fab class="settings-button">
+                <mat-icon>settings</mat-icon>
+            </button>
+        </div>
+        <div class="content">            
+            <form  [formGroup]="settingsForm" fxLayout="row" fxLayoutAlign="space-between start">
+                <div fxLayout="column" fxLayoutAlign="start center"fxFlex="30">
+                    <button mat-button class="upload-photo" [disableRipple]="true">
+                        <mat-icon class="upload-photo material-icons-outlined">account_circle</mat-icon>
+                    </button>
+                    <mat-hint>UPLOAD A PHOTO</mat-hint>
+                    <div class="user-name">
+                        {{user?.firstName}}<br>
+                        {{user?.lastName}}
+                    </div>
+                    <mat-hint>{{user?.email}}</mat-hint>
+                    
+                    <button mat-raised-button color="primary" style="margin-top: 50px" [disabled]="!isActive">Resend the invite</button>
+                </div>
+                <div fxLayout="column" fxFlex="30"  fxLayoutAlign="start start">
+                    <div class="mat-headline">Details</div>
+                    <mat-slide-toggle class="status-toggle" [checked]="isActive" (change)="onStatusChange()">
+                        The user is {{isActive ? 'Active' : 'Inactive'}}
+                    </mat-slide-toggle>
+
+                    <mat-form-field>
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Role" formControlName="role" required>
+                            <mat-option [value]="item" *ngFor="let item of roleSelectList">{{roles[item]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-raised-button color="primary" style="margin-top: 98px" [disabled]="!isActive" (click)="onSaveChanges()">Save Changes</button>
+                </div>
+
+                <div fxLayout="column" fxFlex="30">
+                    <div class="mat-headline">Permissions</div>
+                    <div fxLayout="row" fxLayoutAlign="space-between start">
+                        <span>Super Admin</span>
+                        <mat-slide-toggle></mat-slide-toggle>
+                    </div>                   
+
+                    <mat-accordion [togglePosition]="'before'" formArrayName="permissions" multi>
+                        <mat-expansion-panel expanded *ngFor="let group of permissions.controls; let permissionIndex=index" [formGroupName]="permissionIndex">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              {{group.get('groupName')?.value}}
+                            </mat-panel-title>
+                              <mat-slide-toggle (click)="$event.stopPropagation()"></mat-slide-toggle>
+                          </mat-expansion-panel-header>
+                          <ul formArrayName="groupPermissions">
+                            <li fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let permission of getGroupPermissions(group).controls; let gpIndex=index" [formGroupName]="gpIndex">
+                                <label>{{permission.get('name')?.value}}</label>
+                                <mat-slide-toggle [labelPosition]="'before'" formControlName="value"></mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+
+

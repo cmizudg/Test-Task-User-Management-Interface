@@ -21,6 +21,13 @@ export class UserService {
       );
   }
 
+  getUser(id: number): Observable<User> {
+    const url = `${usersUrl}/${id}`;
+    return this.http.get<User>(url).pipe(
+      catchError(this.handleError<User>(`getUser id=${id}`))
+    );
+  }
+
   addUser(user: User): Observable<User> {
     user.permissions = defaultPermissions;
 

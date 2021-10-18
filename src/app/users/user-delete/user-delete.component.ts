@@ -9,7 +9,7 @@ import { UserService } from '../../core/services/user.service';
 })
 export class UserDeleteComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<UserDeleteComponent>,
+  constructor(private dialogRef: MatDialogRef<UserDeleteComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               private service: UserService) { }
 
