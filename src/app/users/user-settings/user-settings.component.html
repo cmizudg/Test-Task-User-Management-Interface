@@ -44,7 +44,7 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <button mat-raised-button color="primary" style="margin-top: 98px" [disabled]="!isActive" (click)="onSaveChanges()">Save Changes</button>
+                    <button mat-raised-button color="primary" style="margin-top: 98px" [disabled]="!isActive || !settingsForm.valid" (click)="onSaveChanges()">Save Changes</button>
                 </div>
 
                 <div fxLayout="column" fxFlex="30">
@@ -60,7 +60,7 @@
                             <mat-panel-title>
                               {{group.get('groupName')?.value}}
                             </mat-panel-title>
-                              <mat-slide-toggle (click)="$event.stopPropagation()" [disabled]="!isActive"></mat-slide-toggle>
+                              <mat-slide-toggle (click)="$event.stopPropagation()" [disabled]="!isActive" (change)="onGroupPermissionChange($event.checked, group)"></mat-slide-toggle>
                           </mat-expansion-panel-header>
                           <ul formArrayName="groupPermissions">
                             <li fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let permission of getGroupPermissions(group).controls; let gpIndex=index" [formGroupName]="gpIndex">

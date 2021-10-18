@@ -86,6 +86,14 @@ export class UserSettingsComponent implements OnInit {
      return group.get('groupPermissions') as FormArray;
   }
 
+  onGroupPermissionChange(checked: boolean, group: any) {
+    const groupPermission = group.get('groupPermissions') as FormArray;
+    
+    groupPermission.controls.forEach(x => {
+       x.patchValue({'value': checked})
+    });
+  }
+
   onSaveChanges() {
     // TODO
   }
