@@ -51,7 +51,7 @@
                     <div class="mat-headline">Permissions</div>
                     <div fxLayout="row" fxLayoutAlign="space-between start">
                         <span>Super Admin</span>
-                        <mat-slide-toggle></mat-slide-toggle>
+                        <mat-slide-toggle [disabled]="!isActive"></mat-slide-toggle>
                     </div>                   
 
                     <mat-accordion [togglePosition]="'before'" formArrayName="permissions" multi>
@@ -60,7 +60,7 @@
                             <mat-panel-title>
                               {{group.get('groupName')?.value}}
                             </mat-panel-title>
-                              <mat-slide-toggle (click)="$event.stopPropagation()"></mat-slide-toggle>
+                              <mat-slide-toggle (click)="$event.stopPropagation()" [disabled]="!isActive"></mat-slide-toggle>
                           </mat-expansion-panel-header>
                           <ul formArrayName="groupPermissions">
                             <li fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let permission of getGroupPermissions(group).controls; let gpIndex=index" [formGroupName]="gpIndex">

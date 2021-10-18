@@ -72,9 +72,9 @@ export class UserSettingsComponent implements OnInit {
   onStatusChange() {
     this.isActive = !this.isActive; 
     if (this.isActive) {
-      this.settingsForm.disable();
-    } else {
       this.settingsForm.enable();
+    } else {
+      this.settingsForm.disable();
     }    
   }
 
